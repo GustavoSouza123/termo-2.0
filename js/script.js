@@ -39,21 +39,7 @@ const changeInputFocus = (e) => {
         e.target.nextSibling.focus();
         return;
     } else if(e.keyCode === 13) {
-        let rowComplete = checkRowComplete();
-        if(rowComplete) {
-            currentRow++;
-            if(currentRow == document.querySelectorAll('.row').length) {
-                console.log('O jogo acabou');
-                e.target.blur();
-                disableRow(currentRow-1);
-            } else {
-                disableRow(currentRow-1);
-                enableRow(currentRow);
-                setTimeout(() => {
-                    document.querySelectorAll('.row')[currentRow].firstChild.focus();
-                }, 10);
-            }
-        }
+        pressEnterKey();
     }
 
     if(currentInput < 5) {
@@ -83,14 +69,38 @@ const enableRow = (id) => {
 }
 
 const checkRowComplete = () => {
-    let inputs = document.querySelectorAll('.row')[currentRow].querySelectorAll('.input');
-    for(i = 0; i < inputs.length; i++) {
-        if(inputs[i].innerText == '') {
-            console.log(i, false);
-            return false;
+    if(currentRow < document.querySelectorAll('.row').length) {
+        let inputs = document.querySelectorAll('.row')[currentRow].querySelectorAll('.input');
+        for(i = 0; i < inputs.length; i++) {
+            if(inputs[i].innerText == '') {
+                console.log(i, false);
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+const pressEnterKey = () => {
+    let rowComplete = checkRowComplete();
+    if(rowComplete) {
+        currentRow++;
+        if(currentRow == document.querySelectorAll('.row').length) {
+            console.log('O jogo acabou');
+            disableRow(currentRow-1);
+        } else {
+            disableRow(currentRow-1);
+            enableRow(currentRow);
+            setTimeout(() => {
+                document.querySelectorAll('.row')[currentRow].firstChild.focus();
+            }, 10);
         }
     }
-    return true;
 }
 
 generateGame();
+document.addEventListener('keydown', (event) => {
+    if(event.keyCode === 13) {
+        pressEnterKey();
+    }
+})
