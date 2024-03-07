@@ -17,7 +17,7 @@ const inputClick = (e) => {
 }
 
 const changeInputFocus = (e) => {
-    // console.log(e.key, e.keyCode)
+    console.log(e.key, e.keyCode)
     
     currentInput = +e.target.getAttribute('index') + 1;
 
@@ -26,7 +26,8 @@ const changeInputFocus = (e) => {
             e.target.innerText = '';
         }
     } else if(e.key.match(/^[0-9]$/g)) {
-        e.target.innerText = '';
+        e.preventDefault();
+        return;
     } else if(e.keyCode === 8 || e.keyCode === 37 || e.keyCode === 38) {
         currentInput--;
         if(currentInput > 0) {
@@ -36,7 +37,9 @@ const changeInputFocus = (e) => {
         }
         return;
     } else if(e.keyCode === 32) {
-        e.target.innerText = '';
+        e.preventDefault();
+    } else if(e.keyCode === 16 || e.keyCode === 17 || e.keyCode === 18 || e.keyCode === 91) {
+        e.preventDefault();
         return;
     } else if(e.keyCode === 13) {
         pressEnterKey();
@@ -95,7 +98,14 @@ const pressEnterKey = () => {
                 document.querySelectorAll('.row')[currentRow].firstChild.focus();
             }, 10);
         }
+        checkWord();
     }
+}
+
+const checkWord = () => {
+    let word = '';
+    document.querySelectorAll('.row')[currentRow-1].querySelectorAll('.input').forEach((input) => word += input.innerText);
+    console.log(word);
 }
 
 generateGame();

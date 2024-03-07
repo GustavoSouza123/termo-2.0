@@ -59,3 +59,13 @@ body {
 .game .row.disabled .input:focus {   
     outline: none;
 }
+
+.game .row.active .input.right {
+    color: green;
+}
+.game .row.active .input.wrong {
+    color: red;
+}
+.game .row.active .input.almost {
+    color: gold;
+}
