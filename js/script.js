@@ -17,7 +17,7 @@ const inputClick = (e) => {
 }
 
 const changeInputFocus = (e) => {
-    console.log(e.keyCode)
+    // console.log(e.key, e.keyCode)
     
     currentInput = +e.target.getAttribute('index') + 1;
 
@@ -25,9 +25,10 @@ const changeInputFocus = (e) => {
         if(e.target.innerText != '') {
             e.target.innerText = '';
         }
+    } else if(e.key.match(/^[0-9]$/g)) {
+        e.target.innerText = '';
     } else if(e.keyCode === 8 || e.keyCode === 37 || e.keyCode === 38) {
         currentInput--;
-        e.target.innerText = '';
         if(currentInput > 0) {
             setTimeout(() => {
                 e.target.previousSibling.focus();
@@ -36,13 +37,12 @@ const changeInputFocus = (e) => {
         return;
     } else if(e.keyCode === 32) {
         e.target.innerText = '';
-        e.target.nextSibling.focus();
         return;
     } else if(e.keyCode === 13) {
         pressEnterKey();
     }
 
-    if(currentInput < 5) {
+    if(currentInput < 5 && e.keyCode !== 13) {
         setTimeout(() => {
             e.target.nextSibling.focus();
         }, 10);
