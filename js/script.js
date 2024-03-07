@@ -17,7 +17,7 @@ const inputClick = (e) => {
 }
 
 const changeInputFocus = (e) => {
-    // console.log(e.keyCode)
+    console.log(e.keyCode)
     
     currentInput = +e.target.getAttribute('index') + 1;
 
@@ -25,43 +25,46 @@ const changeInputFocus = (e) => {
         if(e.target.innerText != '') {
             e.target.innerText = '';
         }
-    } else if(e.keyCode === 8) {
+    } else if(e.keyCode === 8 || e.keyCode === 37 || e.keyCode === 38) {
+        currentInput--;
         e.target.innerText = '';
         if(currentInput > 0) {
             setTimeout(() => {
                 e.target.previousSibling.focus();
             }, 10);
         }
+        return;
     } else if(e.keyCode === 32) {
+        e.target.innerText = '';
+        e.target.nextSibling.focus();
+        return;
+    } else if(e.keyCode === 13) {
+        let rowComplete = checkRowComplete();
+        if(rowComplete) {
+            currentRow++;
+            if(currentRow == document.querySelectorAll('.row').length) {
+                console.log('O jogo acabou');
+                e.target.blur();
+                disableRow(currentRow-1);
+            } else {
+                disableRow(currentRow-1);
+                enableRow(currentRow);
+                setTimeout(() => {
+                    document.querySelectorAll('.row')[currentRow].firstChild.focus();
+                }, 10);
+            }
+        }
+    }
+
+    if(currentInput < 5) {
         setTimeout(() => {
             e.target.nextSibling.focus();
         }, 10);
+    } else {
+        setTimeout(() => {
+            e.target.blur();
+        }, 10);
     }
-
-    setTimeout(() => {
-        if(currentInput % 5 == 0) {
-            let rowComplete = checkRowComplete();
-            if(rowComplete) {
-                currentRow++;
-                if(currentRow == document.querySelectorAll('.row').length) {
-                    console.log('O jogo acabou');
-                    e.target.blur();
-                    disableRow(currentRow-1);
-                    return;
-                } else {
-                    disableRow(currentRow-1);
-                    enableRow(currentRow);
-                    setTimeout(() => {
-                        document.querySelectorAll('.row')[currentRow].firstChild.focus();
-                    }, 10);
-                }
-            }
-        } else {
-            setTimeout(() => {
-                e.target.nextSibling.focus();
-            }, 10);
-        }
-    }, 10)
 
     console.log('focus', currentInput, currentRow)
 }
@@ -89,6 +92,5 @@ const checkRowComplete = () => {
     }
     return true;
 }
-
 
 generateGame();
