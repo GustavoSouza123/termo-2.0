@@ -38,6 +38,7 @@ body {
     align-items: center;
     justify-content: center;
     background-color: #444;
+    color: #fff;
     border-radius: 5px;
     outline: none;
     caret-color: transparent;
@@ -60,12 +61,12 @@ body {
     outline: none;
 }
 
-.game .row.active .input.right {
-    color: green;
+.game .row .input.right {
+    color: green !important;
 }
-.game .row.active .input.wrong {
-    color: red;
+.game .row .input.wrong {
+    color: red !important;
 }
-.game .row.active .input.almost {
-    color: gold;
+.game .row .input.include {
+    color: gold !important;
 }

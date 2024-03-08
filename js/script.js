@@ -1,4 +1,5 @@
 const game = document.querySelector('.game');
+let word;
 let currentInput = 0;
 let currentRow = 0;
 
@@ -9,6 +10,11 @@ const generateGame = () => {
             document.querySelectorAll('.row')[i].innerHTML += `<div class="input" contenteditable="${i === 0}" tabindex="0" index="${j}" onkeydown="changeInputFocus(event)" onclick="inputClick(event)"></div>`;
         }
     }
+    fetch("json/words.json")
+        .then((response) => response.json())
+        .then((json) => {
+            word = json[Math.floor(Math.random() * 1000)].toUpperCase();
+        });
 }
 
 const inputClick = (e) => {
@@ -28,7 +34,15 @@ const changeInputFocus = (e) => {
     } else if(e.key.match(/^[0-9]$/g)) {
         e.preventDefault();
         return;
-    } else if(e.keyCode === 8 || e.keyCode === 37 || e.keyCode === 38) {
+    } else if(e.keyCode === 8) {
+        e.target.innerText = '';
+        currentInput--;
+        if(currentInput > 0) {
+            setTimeout(() => {
+                e.target.previousSibling.focus();
+            }, 10);
+        }
+    } else if(e.keyCode === 37 || e.keyCode === 38) {
         currentInput--;
         if(currentInput > 0) {
             setTimeout(() => {
@@ -45,7 +59,7 @@ const changeInputFocus = (e) => {
         pressEnterKey();
     }
 
-    if(currentInput < 5 && e.keyCode !== 13) {
+    if(currentInput < 5 && e.keyCode !== 13 && e.keyCode !== 8) {
         setTimeout(() => {
             e.target.nextSibling.focus();
         }, 10);
@@ -88,9 +102,11 @@ const pressEnterKey = () => {
     let rowComplete = checkRowComplete();
     if(rowComplete) {
         currentRow++;
+        let rightChars = checkWord();
         if(currentRow == document.querySelectorAll('.row').length) {
             console.log('O jogo acabou');
             disableRow(currentRow-1);
+            checkVictory(rightChars);
         } else {
             disableRow(currentRow-1);
             enableRow(currentRow);
@@ -98,14 +114,53 @@ const pressEnterKey = () => {
                 document.querySelectorAll('.row')[currentRow].firstChild.focus();
             }, 10);
         }
-        checkWord();
     }
 }
 
 const checkWord = () => {
-    let word = '';
-    document.querySelectorAll('.row')[currentRow-1].querySelectorAll('.input').forEach((input) => word += input.innerText);
-    console.log(word);
+    let inputWord = [];
+    document.querySelectorAll('.row')[currentRow-1].querySelectorAll('.input').forEach((input) => inputWord.push(input.innerText));
+    console.log(inputWord.join(''), word);
+    let rightChars = 0;
+    for(i = 0; i < inputWord.length; i++) {
+        let currentInput = document.querySelectorAll('.row')[currentRow-1].querySelectorAll('.input')[i];
+        if(inputWord[i] === word.charAt(i)) {
+            currentInput.classList.add('right');
+            rightChars++;
+            console.log('right');
+            continue;
+        } else {
+            currentInput.classList.add('wrong');
+            console.log('wrong');
+        }
+        if(word.includes(inputWord[i])) {
+            currentInput.classList.add('include');
+            console.log('include')
+        }
+    }
+    return rightChars;
+}
+
+const checkVictory = (rightChars) => {
+    if(rightChars == inputWord.length) {
+        winGame();
+    } else {
+        loseGame();
+    }
+}
+
+const winGame = () => {
+    setTimeout(() => {
+        alert('VOCÊ GANHOU O JOGO!');
+    }, 10)
+    console.log('VOCÊ GANHOU O JOGO!')
+}
+
+const loseGame = () => {
+    console.log('VOCÊ PERDEU O JOGO :(')
+    setTimeout(() => {
+        alert('VOCÊ PERDEU O JOGO :(');
+    }, 10)
 }
 
 generateGame();
