@@ -13,7 +13,7 @@ const generateGame = () => {
     fetch("json/words.json")
         .then((response) => response.json())
         .then((json) => {
-            word = json[Math.floor(Math.random() * 1000)].toUpperCase();
+            word = json[Math.floor(Math.random() * 1000)].toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         });
 }
 
@@ -52,14 +52,14 @@ const changeInputFocus = (e) => {
         return;
     } else if(e.keyCode === 32) {
         e.preventDefault();
-    } else if(e.keyCode === 16 || e.keyCode === 17 || e.keyCode === 18 || e.keyCode === 91) {
+    } else if(e.keyCode === 16 || e.keyCode === 17 || e.keyCode === 18 || e.keyCode === 91 || e.keyCode === 222) {
         e.preventDefault();
         return;
     } else if(e.keyCode === 13) {
         pressEnterKey();
     }
 
-    if(currentInput < 5 && e.keyCode !== 13 && e.keyCode !== 8) {
+    if(currentInput < 5 && e.keyCode !== 8 && e.keyCode !== 13) {
         setTimeout(() => {
             e.target.nextSibling.focus();
         }, 10);
