@@ -2,6 +2,9 @@ const game = document.querySelector('.game');
 let word;
 let currentInput = 0;
 let currentRow = 0;
+let wins = localStorage.getItem('wins');
+let games = localStorage.getItem('games');
+let tries = localStorage.getItem('tries');
 
 const generateGame = () => {
     for(let i = 0; i < 6; i++) {
@@ -77,6 +80,8 @@ const disableRow = (id) => {
     document.querySelectorAll('.row')[id].classList.add('disabled');
     document.querySelectorAll('.row')[id].querySelectorAll('.input').forEach((input) => input.setAttribute('tabindex', '-1'));
     document.querySelectorAll('.row')[id].querySelectorAll('.input').forEach((input) => input.setAttribute('onclick', ''));
+    document.querySelectorAll('.row')[id].querySelectorAll('.input').forEach((input) => input.setAttribute('onkeydown', ''));
+    document.querySelectorAll('.row')[id].querySelectorAll('.input').forEach((input) => input.setAttribute('contenteditable', 'false'));
 }
 
 const enableRow = (id) => {
@@ -139,6 +144,8 @@ const checkWord = () => {
             console.log('include')
         }
     }
+    tries++;
+    updateScore();
     return rightChars;
 }
 
@@ -155,6 +162,9 @@ const winGame = () => {
         alert('VOCÊ GANHOU O JOGO!');
     }, 10)
     console.log('VOCÊ GANHOU O JOGO!')
+    games++;
+    wins++;
+    updateScore();
 }
 
 const loseGame = () => {
@@ -162,7 +172,23 @@ const loseGame = () => {
     setTimeout(() => {
         alert('VOCÊ PERDEU O JOGO :(');
     }, 10)
+    games++;
+    updateScore();
 }
+
+const updateScore = () => {
+    localStorage.setItem('wins', wins);
+    localStorage.setItem('games', games);
+    localStorage.setItem('tries', tries);
+    document.querySelectorAll('.top .score span')[0].innerText = wins;
+    document.querySelectorAll('.top .score span')[1].innerText = games;
+    document.querySelector('.top .tries span').innerText = tries;
+}
+
+const restart = () => {
+    location.reload();
+}
+
 
 generateGame();
 document.addEventListener('keydown', (event) => {
@@ -170,3 +196,4 @@ document.addEventListener('keydown', (event) => {
         pressEnterKey();
     }
 })
+document.querySelector('.restart').addEventListener('click', restart);

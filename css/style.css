@@ -19,6 +19,16 @@ body {
     min-height: 100vh;
 }
 
+.top {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.top .tries {
+    margin-left: 10px;
+}
+
 .game {
     display: flex;
     flex-direction: column;
@@ -69,4 +79,17 @@ body {
 }
 .game .row .input.include {
     color: gold !important;
+}
+
+.restart {
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #333;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.restart:hover {
+    background-color: #444;
 }
