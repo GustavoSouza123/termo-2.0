@@ -103,10 +103,10 @@ const pressEnterKey = () => {
     if(rowComplete) {
         currentRow++;
         let rightChars = checkWord();
+        checkVictory(rightChars);
         if(currentRow == document.querySelectorAll('.row').length) {
             console.log('O jogo acabou');
             disableRow(currentRow-1);
-            checkVictory(rightChars);
         } else {
             disableRow(currentRow-1);
             enableRow(currentRow);
@@ -117,8 +117,9 @@ const pressEnterKey = () => {
     }
 }
 
+let inputWord = [];
 const checkWord = () => {
-    let inputWord = [];
+    inputWord = [];
     document.querySelectorAll('.row')[currentRow-1].querySelectorAll('.input').forEach((input) => inputWord.push(input.innerText));
     console.log(inputWord.join(''), word);
     let rightChars = 0;
@@ -144,7 +145,7 @@ const checkWord = () => {
 const checkVictory = (rightChars) => {
     if(rightChars == inputWord.length) {
         winGame();
-    } else {
+    } else if(currentRow == document.querySelectorAll('.row').length) {
         loseGame();
     }
 }
