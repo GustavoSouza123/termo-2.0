@@ -2,9 +2,10 @@ const game = document.querySelector('.game');
 let word;
 let currentInput = 0;
 let currentRow = 0;
-let wins = localStorage.getItem('wins');
-let games = localStorage.getItem('games');
-let tries = localStorage.getItem('tries');
+
+let wins = localStorage.getItem('wins') != null ? localStorage.getItem('wins') : 0;
+let games = localStorage.getItem('games') != null ? localStorage.getItem('games') : 0;
+let tries = localStorage.getItem('tries') != null ? localStorage.getItem('tries') : 0;
 
 const generateGame = () => {
     for(let i = 0; i < 6; i++) {
@@ -14,10 +15,10 @@ const generateGame = () => {
         }
     }
     fetch("json/words.json")
-        .then((response) => response.json())
-        .then((json) => {
-            word = json[Math.floor(Math.random() * 1000)].toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-        });
+    .then((response) => response.json())
+    .then((json) => {
+        word = json[Math.floor(Math.random() * 1000)].toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    });
 }
 
 const inputClick = (e) => {
@@ -29,7 +30,7 @@ const changeInputFocus = (e) => {
     console.log(e.key, e.keyCode)
     
     currentInput = +e.target.getAttribute('index') + 1;
-
+    
     if(e.key.match(/^[a-zA-Z]$/g)) {
         if(e.target.innerText != '') {
             e.target.innerText = '';
@@ -61,7 +62,7 @@ const changeInputFocus = (e) => {
     } else if(e.keyCode === 13) {
         pressEnterKey();
     }
-
+    
     if(currentInput < 5 && e.keyCode !== 8 && e.keyCode !== 13) {
         setTimeout(() => {
             e.target.nextSibling.focus();
@@ -71,7 +72,7 @@ const changeInputFocus = (e) => {
             e.target.blur();
         }, 10);
     }
-
+    
     console.log('focus', currentInput, currentRow)
 }
 
@@ -169,8 +170,10 @@ const winGame = () => {
 
 const loseGame = () => {
     console.log('VOCÊ PERDEU O JOGO :(')
+    console.log('A PALAVRA ERA "'+word+'"')
     setTimeout(() => {
         alert('VOCÊ PERDEU O JOGO :(');
+        alert('A PALAVRA ERA "'+word+'"');
     }, 10)
     games++;
     updateScore();
@@ -189,8 +192,9 @@ const restart = () => {
     location.reload();
 }
 
-
 generateGame();
+updateScore();
+
 document.addEventListener('keydown', (event) => {
     if(event.keyCode === 13) {
         pressEnterKey();
