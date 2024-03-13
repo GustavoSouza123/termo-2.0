@@ -13,7 +13,8 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #222;
+    /* background: radial-gradient(circle, #f29147 0%, #f29147 30%, #fdbb2d 100%); */
+    background: radial-gradient(circle, #1b3137 0%, #1b3137 30%, #335C67 100%);
     color: #fff;
     width: 100%;
     min-height: 100vh;
@@ -47,7 +48,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #333;
+    background-color: #24434b;
     color: #fff;
     border-radius: 5px;
     outline: none;
@@ -59,12 +60,12 @@ body {
 
 .game .row.active .input {
     background-color: transparent;
-    border: 3px solid #888;
+    border: 3px solid #335C67;
     cursor: pointer;
 }
 
 .game .row.active .input:focus {   
-    border-bottom: 7px solid #888;
+    border-bottom: 7px solid #335C67;
 }
 
 .game .row.disabled .input:focus {   
@@ -78,18 +79,18 @@ body {
     color: red !important;
 }
 .game .row .input.include {
-    color: gold !important;
+    color: #ffe100 !important;
 }
 
 .restart {
     margin-top: 20px;
     padding: 10px 15px;
-    background-color: #333;
+    background-color: #24434b;
     border-radius: 5px;
     cursor: pointer;
     transition: .2s;
 }
 
 .restart:hover {
-    background-color: #444;
+    background-color: #335C67;
 }
