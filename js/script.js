@@ -1,4 +1,5 @@
-const game = document.querySelector('.game');
+const gamesDiv = document.querySelector('.games');
+let gameMode = document.querySelector('.header .content .gameModes div.active').getAttribute('gameMode');
 let word;
 let currentInput = 0;
 let currentRow = 0;
@@ -11,10 +12,14 @@ let tries = localStorage.getItem('tries') != null ? localStorage.getItem('tries'
 // functions for the game functionality
 
 const generateGame = () => {
-    for(let i = 0; i < 6; i++) {
-        game.innerHTML += `<div class="row ${i === 0 ?'active' : 'disabled'}"></div>`;
-        for(let j = 0; j < 5; j++) {
-            document.querySelectorAll('.row')[i].innerHTML += `<div class="input" contenteditable="${i === 0}" tabindex="0" index="${j}" onkeydown="changeInputFocus(event)" onclick="inputClick(event)"></div>`;
+    gamesDiv.innerHTML = '';
+    for(let cont = 0; cont < gameMode; cont++) {
+        gamesDiv.innerHTML += `<div class="game"></div>`;
+        for(let i = 0; i < 6; i++) {
+            document.querySelectorAll('.game')[cont].innerHTML += `<div class="row ${i === 0 ?'active' : 'disabled'}"></div>`;
+            for(let j = 0; j < 5; j++) {
+                document.querySelectorAll('.game')[cont].querySelectorAll('.row')[i].innerHTML += `<div class="input" contenteditable="${i === 0}" tabindex="0" index="${j}" onkeydown="changeInputFocus(event)" onclick="inputClick(event)"></div>`;
+            }
         }
     }
     fetch("json/words.json")
@@ -195,6 +200,15 @@ const restart = () => {
     location.reload();
 }
 
+// functions for the game mode
+
+const changeGameMode = (e) => {
+    document.querySelectorAll('.header .content .gameModes div').forEach((mode) => mode.classList.remove('active'));
+    e.target.classList.add('active');
+    gameMode = document.querySelector('.header .content .gameModes div.active').getAttribute('gameMode');
+    generateGame();
+}
+
 // functions for the game theme
 
 let theme = 'dark';
@@ -220,6 +234,10 @@ document.addEventListener('keydown', (event) => {
     }
 })
 document.querySelector('.restart').addEventListener('click', restart);
+
+// executing functions for the game mode
+
+document.querySelectorAll('.header .content .gameModes div').forEach((mode) => mode.addEventListener('click', () => { changeGameMode(event) }));
 
 // executing functions for the game theme
 

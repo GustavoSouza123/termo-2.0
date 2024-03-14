@@ -10,10 +10,11 @@
     <div class="container" tabindex="0">
         <div class="header">
             <div class="content">
-                <div class="games">
-                    <div class="dueto"><a href="">Dueto</a></div>
-                    <div class="quarteto"><a href="">Quarteto</a></div>
-                    <div class="sexteto"><a href="">Sexteto</a></div>
+                <div class="gameModes">
+                    <div class="termo active" gameMode="1">Termo</div>
+                    <div class="dueto" gameMode="2">Dueto</div>
+                    <div class="quarteto" gameMode="4">Quarteto</div>
+                    <div class="sexteto" gameMode="6">Sexteto</div>
                 </div>
                 <div class="theme">
                     <div class="toggle">
@@ -22,13 +23,15 @@
                 </div>
             </div>
         </div>
-        <h1>Termo</h1>
-        <div class="top">
-            <div class="score">Vitórias: <span>0</span>/<span>0</span></div>
-            <div class="tries">Tentativas: <span>0</span></div>
+        <div class="content">
+            <h1>Termo</h1>
+            <div class="top">
+                <div class="score">Vitórias: <span>0</span>/<span>0</span></div>
+                <div class="tries">Tentativas: <span>0</span></div>
+            </div>
+            <div class="games"></div>
+            <div class="restart">Recomeçar</div>
         </div>
-        <div class="game"></div>
-        <div class="restart">Recomeçar</div>
     </div>
 
     <script src="js/script.js"></script>

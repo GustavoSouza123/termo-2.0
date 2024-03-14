@@ -54,30 +54,26 @@ body {
     padding: 0 20px;
 }
 
-.header .content .games {
+.header .content .gameModes {
     height: 100%;
     display: flex;
     align-items: center;
     gap: 30px;
 }
 
-.header .content .games > div {
+.header .content .gameModes > div {
     height: 60%;
-}
-
-.header .content .games > div a {
-    height: 100%;
-    color: #fff;
-    text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0 20px;
     transition: .2s;
     border-radius: 5px;
+    cursor: pointer;
 }
 
-.header .content .games > div a:hover {
+.header .content .gameModes > div:hover,
+.header .content .gameModes > div.active {
     background-color: var(--header-hover);
 }
 
@@ -98,6 +94,15 @@ body {
     height: 24px;
 }
 
+
+.container > .content {
+    width: 100%;
+    min-height: calc(100vh - 70px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .top {
     display: flex;
     align-items: center;
@@ -106,6 +111,16 @@ body {
 
 .top .tries {
     margin-left: 10px;
+}
+
+.games {
+    width: 90%;
+    max-width: 1600px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
 }
 
 .game {
