@@ -3,9 +3,12 @@ let word;
 let currentInput = 0;
 let currentRow = 0;
 
+// scoreboard variables
 let wins = localStorage.getItem('wins') != null ? localStorage.getItem('wins') : 0;
 let games = localStorage.getItem('games') != null ? localStorage.getItem('games') : 0;
 let tries = localStorage.getItem('tries') != null ? localStorage.getItem('tries') : 0;
+
+// functions for the game functionality
 
 const generateGame = () => {
     for(let i = 0; i < 6; i++) {
@@ -192,6 +195,22 @@ const restart = () => {
     location.reload();
 }
 
+// functions for the game theme
+
+let theme = 'dark';
+
+const changeTheme = () => {
+    theme = theme == 'light' ? 'dark' : 'light';
+    updateTheme(theme);
+}
+
+const updateTheme = (theme) => {
+    document.querySelector('.header .theme .toggle img').setAttribute('src', `assets/${theme}-theme.svg`);
+    document.querySelector('html').classList.toggle('dark');
+}
+
+// executing functions for the game functionality
+
 generateGame();
 updateScore();
 
@@ -201,3 +220,8 @@ document.addEventListener('keydown', (event) => {
     }
 })
 document.querySelector('.restart').addEventListener('click', restart);
+
+// executing functions for the game theme
+
+updateTheme(theme);
+document.querySelector('.header .theme').addEventListener('click', changeTheme);

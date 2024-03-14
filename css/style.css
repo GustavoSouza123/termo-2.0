@@ -4,6 +4,22 @@
     padding: 0;
 }
 
+html {
+    --gradient-1: #f29147;
+    --gradient-2: #fdbb2d;
+    --header-hover: #fdbb2d;
+    --input-disabled-bg: #f7a33c;
+    --restart-bg: #f7a33c;
+}
+
+html.dark {
+    --gradient-1: #1b3137;
+    --gradient-2: #335C67;
+    --header-hover: #335c677a;
+    --input-disabled-bg: #24434b;
+    --restart-bg: #24434b;
+}
+
 body {
     font-family: sans-serif;
 }
@@ -13,11 +29,73 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* background: radial-gradient(circle, #f29147 0%, #f29147 30%, #fdbb2d 100%); */
-    background: radial-gradient(circle, #1b3137 0%, #1b3137 30%, #335C67 100%);
+    background: radial-gradient(circle, var(--gradient-1) 0%, var(--gradient-1) 30%, var(--gradient-2) 100%);
     color: #fff;
     width: 100%;
     min-height: 100vh;
+}
+
+.header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+}
+
+.header .content {
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.header .content .games {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.header .content .games > div {
+    height: 60%;
+}
+
+.header .content .games > div a {
+    height: 100%;
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    transition: .2s;
+    border-radius: 5px;
+}
+
+.header .content .games > div a:hover {
+    background-color: var(--header-hover);
+}
+
+.header .theme {
+    width: 70px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.header .theme .toggle {
+    padding-top: 3px;
+}
+
+.header .theme .toggle img {
+    height: 24px;
 }
 
 .top {
@@ -48,7 +126,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #24434b;
+    background-color: var(--input-disabled-bg);
     color: #fff;
     border-radius: 5px;
     outline: none;
@@ -60,12 +138,12 @@ body {
 
 .game .row.active .input {
     background-color: transparent;
-    border: 3px solid #335C67;
+    border: 3px solid var(--gradient-2);
     cursor: pointer;
 }
 
 .game .row.active .input:focus {   
-    border-bottom: 7px solid #335C67;
+    border-bottom: 7px solid var(--gradient-2);
 }
 
 .game .row.disabled .input:focus {   
@@ -85,12 +163,12 @@ body {
 .restart {
     margin-top: 20px;
     padding: 10px 15px;
-    background-color: #24434b;
+    background-color: var(--restart-bg);
     border-radius: 5px;
     cursor: pointer;
     transition: .2s;
 }
 
 .restart:hover {
-    background-color: #335C67;
+    background-color: var(--gradient-2);
 }
