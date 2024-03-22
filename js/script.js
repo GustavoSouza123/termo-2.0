@@ -237,7 +237,11 @@ document.querySelector('.restart').addEventListener('click', restart);
 
 // executing functions for the game mode
 
-document.querySelectorAll('.header .content .gameModes div').forEach((mode) => mode.addEventListener('click', () => { changeGameMode(event) }));
+document.querySelectorAll('.header .content .gameModes div').forEach((mode) => {
+    if(!mode.classList.contains('disabled')) {
+        mode.addEventListener('click', () => { changeGameMode(event) });
+    }
+});
 
 // executing functions for the game theme
 
