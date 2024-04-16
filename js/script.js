@@ -75,10 +75,6 @@ const changeInputFocus = (e) => {
         setTimeout(() => {
             e.target.nextSibling.focus();
         }, 10);
-    } else {
-        setTimeout(() => {
-            e.target.blur();
-        }, 10);
     }
     
     console.log('focus', currentInput, currentRow)
